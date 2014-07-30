@@ -1,0 +1,57 @@
+#include<iostream>
+using namespace std;
+
+void split(int values[], int first, int last, int& splitpoint)
+{
+	int splitval = values[first];
+	int savefirst = first;
+	bool onside;
+	first++;
+	do
+	{
+		onside = true;
+		while (onside)
+		{
+			if (values[first] > splitval)
+				onside = false;
+			else{ first++; onside = (first <= last); }
+		}
+		onside = (first <= last);
+		while (onside)
+		{
+			if (values[last] <= splitval)
+				onside = false;
+			else{ last--; onside = (first <= last); }
+		}
+		if (first < last)
+		{
+			swap(values[first], values[last]);
+			first++;
+			last--;
+		}
+	} while (first <= last);
+	splitpoint = last;
+	swap(values[savefirst], values[splitpoint]);
+}
+
+void Quicksort(int values[], int first, int last)
+{
+	if (first < last)
+	{
+		int splitpoint;
+		split(values, first, last, splitpoint);
+		Quicksort(values, first, splitpoint - 1);
+		Quicksort(values, splitpoint + 1, last);
+	}
+}
+
+int main()
+{
+	int val[11] = { 43, 21, 90, 8, 44, 35, 6, 2, 13, 73, 52 };
+	Quicksort(val, 0, 10);
+
+	for (int i = 0; i < 11; i++)
+	{
+		cout << val[i] << endl;
+	}
+}

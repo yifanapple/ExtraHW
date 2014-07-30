@@ -1,0 +1,23 @@
+#include <iostream>
+
+using namespace std;
+
+int Factorial(int number)
+{
+	if (number == 0)
+		return 1;
+	else
+		return number*Factorial(number - 1);
+
+}
+
+int main()
+{
+	int a;
+	cout << "Please enter a number : ";
+	cin >> a;
+
+	cout << "the factorial of this number is : " << Factorial(a) << endl;
+
+	return 0;
+}

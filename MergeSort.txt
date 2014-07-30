@@ -1,0 +1,61 @@
+#include<iostream>
+using namespace std;
+
+template<class item>
+void Merge(item values[], int leftfirst, int leftlast, int rightfirst, int rightlast)
+{
+	item temp[11];
+	int index = leftfirst;
+	int savefirst = leftfirst;
+	while ((leftfirst <= leftlast) && (rightfirst <= rightlast))
+	{
+		if (values[leftfirst] < values[rightfirst])
+		{
+			temp[index] = values[leftfirst];
+			leftfirst++;
+		}
+		else
+		{
+			temp[index] = values[rightfirst];
+			rightfirst++;
+		}
+		index++;
+	}
+	while (leftfirst <= leftlast)
+	{
+		temp[index] = values[leftfirst];
+		leftfirst++;
+		index++;
+	}
+	while (rightfirst <= rightlast)
+	{
+		temp[index] = values[rightfirst];
+		rightfirst++;
+		index++;
+	}
+	for (int i = savefirst; i <= rightlast; i++)
+	{
+		values[i] = temp[i];
+	}
+}
+
+template<class item>
+void Mergesort(item values[], int first, int last)
+{
+	int middle;
+	if (first < last)
+	{
+		middle = (last + first) / 2;
+		Mergesort(values, first, middle);
+		Mergesort(values, middle + 1, last);
+		Merge(values, first, middle, middle + 1, last);
+	}
+}
+int main()
+{
+	int values[11] = { 3, 17, 43, 2, 67, 35, 7, 25, 40, 39, 52 };
+	Mergesort(values, 0, 10);
+
+	for (int i = 0; i < 11; i++)
+			cout << values[i] << endl;
+}
